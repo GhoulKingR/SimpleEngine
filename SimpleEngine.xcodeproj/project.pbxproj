@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7FFD3BCF2F814907001FE838 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFD3BCE2F814907001FE838 /* OpenGL.framework */; };
+		7FFD3BD12F814933001FE838 /* libglfw.3.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFD3BD02F814933001FE838 /* libglfw.3.4.dylib */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		7FFD3BBA2F8147C4001FE838 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -20,6 +25,8 @@
 
 /* Begin PBXFileReference section */
 		7FFD3BBC2F8147C4001FE838 /* SimpleEngine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleEngine; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FFD3BCE2F814907001FE838 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		7FFD3BD02F814933001FE838 /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.4.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -35,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FFD3BD12F814933001FE838 /* libglfw.3.4.dylib in Frameworks */,
+				7FFD3BCF2F814907001FE838 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				7FFD3BBE2F8147C4001FE838 /* SimpleEngine */,
+				7FFD3BCD2F814907001FE838 /* Frameworks */,
 				7FFD3BBD2F8147C4001FE838 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +65,15 @@
 				7FFD3BBC2F8147C4001FE838 /* SimpleEngine */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7FFD3BCD2F814907001FE838 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FFD3BD02F814933001FE838 /* libglfw.3.4.dylib */,
+				7FFD3BCE2F814907001FE838 /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,7 +263,16 @@
 		7FFD3BC42F8147C4001FE838 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/include,
+					./SimpleEngine/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/Cellar/glfw/3.4/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -252,7 +280,16 @@
 		7FFD3BC52F8147C4001FE838 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/include,
+					./SimpleEngine/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/Cellar/glfw/3.4/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
