@@ -6,6 +6,8 @@
 //
 
 #include "BaseApplication.hpp"
+#include <chrono>
+#include <thread>
 
 BaseApplication::BaseApplication(const char *title, int screenWidth, int screenHeight) {
     glfwInit();
@@ -29,10 +31,16 @@ BaseApplication::BaseApplication(const char *title, int screenWidth, int screenH
     }
 }
 
+BaseApplication::~BaseApplication() {
+    for (const auto &[name, obj] : objects) {
+        delete obj;
+    }
+}
+
 int BaseApplication::start() {
     init();
     
-    for (Object *obj : objects) {
+    for (const auto &[name, obj]: objects) {
         obj->init();
     }
     
@@ -45,12 +53,14 @@ int BaseApplication::start() {
         glClear(GL_COLOR_BUFFER_BIT);
         
         // render objects
-        for (Object *obj : objects) {
+        for (const auto &[name, obj] : objects) {
             obj->render();
         }
         
         glfwPollEvents();
         glfwSwapBuffers(window);
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
     
     glfwTerminate();

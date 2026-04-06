@@ -11,22 +11,23 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <vector>
+#include <unordered_map>
 #include <string>
 #include "Object.hpp"
 
 class BaseApplication {
 private:
-    GLFWwindow *window;
+    GLFWwindow *window = NULL;
     
 protected:
-    std::vector<Object *> objects;
+    std::unordered_map<std::string, Object*> objects;
     
     // user defined functions
     virtual void init(){}
     virtual void loop(){}
 public:
     BaseApplication(const char *title, int screenWidth, int screenHeight);
+    ~BaseApplication();
     int start();
 };
 

@@ -10,6 +10,17 @@
 
 #include "Object.hpp"
 
+std::optional<Shader> Object::defaultShader;
+
+Object::Object() {
+    if (!defaultShader.has_value()) {
+        defaultShader.emplace(
+            "/Users/chigozieoduah/Desktop/default_shaders/default.vs",
+            "/Users/chigozieoduah/Desktop/default_shaders/default.fs"
+        );
+    }
+}
+
 void Object::init() {
     // generate vertex buffer objects
     glGenBuffers(1, &VBO);
@@ -26,71 +37,13 @@ void Object::init() {
     // set vertex attributes pointers and unbind
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    
-    compileShaders();
-}
-
-void Object::compileShaders() {
-    int success;
-    char infoLog[512];
-    
-    // compile vertex shader
-    const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main() {\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    
-    // check for errors compiling vertex shader
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        fprintf(stderr, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-        return;
-    }
-    
-    // compile fragment shader
-    const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main() {\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\0";
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    
-    // error checking for the fragment shader
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        fprintf(stderr, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
-        return;
-    }
-    
-    // create and construct the shader program
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    
-    // error checking for shader program
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        fprintf(stderr, "ERROR::PROGRAM::LINK_ERROR\n%s\n", infoLog);
-        return;
-    }
-    
-    // delete shaders after use
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
 }
 
 void Object::render() {
-    glUseProgram(shaderProgram);
+    defaultShader.value().use();
+    defaultShader.value().setFloat("translate", translate[0], translate[1], translate[2]);
+    defaultShader.value().setFloat("outColor", color[0], color[1], color[2], color[3]);
+    defaultShader.value().setFloat("rotate", rotation);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);

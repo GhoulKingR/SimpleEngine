@@ -263,7 +263,7 @@
 		7FFD3BC42F8147C4001FE838 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
 					/opt/homebrew/include,
@@ -273,6 +273,7 @@
 					"$(inherited)",
 					/opt/homebrew/Cellar/glfw/3.4/lib,
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -280,7 +281,7 @@
 		7FFD3BC52F8147C4001FE838 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
 					/opt/homebrew/include,
@@ -290,6 +291,7 @@
 					"$(inherited)",
 					/opt/homebrew/Cellar/glfw/3.4/lib,
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
